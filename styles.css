@@ -199,6 +199,14 @@ a {
   margin-top: 8px;
 }
 
+.footer-contact a {
+  color: #757575;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
 /* Legal pages */
 .legal-page {
   max-width: 720px;
