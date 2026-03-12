@@ -27,6 +27,7 @@ const darkThemeButtons = document.querySelectorAll(".theme-btn-dark");
 
 let currentSlide = 0;
 let viewportEffectsFrame = null;
+let stickyNavReady = false;
 const storedTheme = (() => {
   try {
     return window.localStorage.getItem("rivelo-theme");
@@ -54,6 +55,11 @@ function setTheme(theme) {
 function syncStickyNav() {
   if (!stickyNav || !heroTitle) {
     return;
+  }
+
+  if (!stickyNavReady) {
+    stickyNav.style.removeProperty("visibility");
+    stickyNavReady = true;
   }
 
   if (window.innerWidth <= 768) {
