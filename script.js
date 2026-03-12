@@ -57,18 +57,28 @@ function syncStickyNav() {
     return;
   }
 
-  if (!stickyNavReady) {
-    stickyNav.style.removeProperty("visibility");
-    stickyNavReady = true;
-  }
-
   if (window.innerWidth <= 768) {
     stickyNav.classList.remove("visible");
+    if (!stickyNavReady) {
+      stickyNav.hidden = false;
+      window.requestAnimationFrame(() => {
+        stickyNav.classList.add("is-ready");
+      });
+      stickyNavReady = true;
+    }
     return;
   }
 
   const rect = heroTitle.getBoundingClientRect();
   stickyNav.classList.toggle("visible", rect.top <= 0);
+
+  if (!stickyNavReady) {
+    stickyNav.hidden = false;
+    window.requestAnimationFrame(() => {
+      stickyNav.classList.add("is-ready");
+    });
+    stickyNavReady = true;
+  }
 }
 
 function syncBuiltScreens() {
