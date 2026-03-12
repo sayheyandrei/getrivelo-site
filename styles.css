@@ -22,11 +22,13 @@
 }
 
 html {
+  background: var(--system-bg, #ffffff);
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
+  background: var(--system-bg, #ffffff);
   overscroll-behavior-y: none;
 }
 

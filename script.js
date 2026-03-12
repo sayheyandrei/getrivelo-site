@@ -14,6 +14,7 @@ const features = [
 ];
 
 const themeRoot = document.querySelector(".page, .legal-shell");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const stickyNav = document.querySelector(".sticky-nav");
 const heroTitle = document.querySelector(".hero-title");
 const builtImages = document.querySelectorAll(".built-image");
@@ -37,18 +38,44 @@ const storedTheme = (() => {
 })();
 
 function setTheme(theme) {
-  if (!themeRoot) {
-    return;
+  const isDarkTheme = theme === "dark";
+  const isLegalPage = Boolean(themeRoot && themeRoot.classList.contains("legal-shell"));
+  const lightSurface = "#ffffff";
+  const darkSurface = isLegalPage ? "#1a1a1a" : "#171717";
+  const surfaceColor = isDarkTheme ? darkSurface : lightSurface;
+
+  if (themeRoot) {
+    if (isDarkTheme) {
+      themeRoot.setAttribute("data-theme", "dark");
+    } else {
+      themeRoot.removeAttribute("data-theme");
+    }
   }
 
-  if (theme === "dark") {
-    themeRoot.setAttribute("data-theme", "dark");
-  } else {
-    themeRoot.removeAttribute("data-theme");
+  if (document.documentElement) {
+    if (isDarkTheme) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+
+    document.documentElement.style.setProperty("--system-bg", surfaceColor);
+  }
+
+  if (document.body) {
+    if (isDarkTheme) {
+      document.body.setAttribute("data-theme", "dark");
+    } else {
+      document.body.removeAttribute("data-theme");
+    }
+  }
+
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", surfaceColor);
   }
 
   try {
-    window.localStorage.setItem("rivelo-theme", theme === "dark" ? "dark" : "light");
+    window.localStorage.setItem("rivelo-theme", isDarkTheme ? "dark" : "light");
   } catch {}
 }
 
